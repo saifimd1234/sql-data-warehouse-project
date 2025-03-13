@@ -18,3 +18,8 @@ WHERE cst_id IN (SELECT cst_id FROM bronze.crm_cust_info GROUP BY cst_id HAVING 
 
 -- We can resolve it by keeping the latest record and deleting the rest.
 
+SELECT
+*,
+ROW_NUMBER() OVER(PARTITION BY cst_id ORDER BY cst_create_date DESC) AS flag_last
+FROM bronze.crm_cust_info
+WHERE cst_id IN (SELECT cst_id FROM bronze.crm_cust_info GROUP BY cst_id HAVING COUNT(*) > 1);
