@@ -77,4 +77,30 @@ FROM (
 	WHERE cst_id IS NOT NULL
 )t WHERE flag_last = 1
 
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER.
+-- Check for NULLs or Duplicates in Primary Key
+-- Expectation: No Results
+SELECT
+    *
+FROM silver.crm_cust_info
+WHERE cst_id IN (
+    SELECT cst_id
+    FROM silver.crm_cust_info 
+    GROUP BY cst_id 
+    HAVING COUNT(*) > 1
+);
 
+-- Check for unwanted spaces.
+-- Expectation: No Results
+SELECT cst_firstname
+FROM silver.crm_cust_info
+WHERE cst_firstname != TRIM(cst_firstname);
+
+SELECT cst_lastname
+FROM silver.crm_cust_info
+WHERE cst_lastname != TRIM(cst_lastname);
+
+-- Data Standardization & Consistency
+SELECT DISTINCT cst_gndr
+FROM silver.crm_cust_info;
