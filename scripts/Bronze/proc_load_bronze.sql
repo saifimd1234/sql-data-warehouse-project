@@ -1,3 +1,6 @@
+CREATE OR ALTER PROCEDURE bronze.load_layer AS
+BEGIN
+
 TRUNCATE TABLE bronze.crm_cust_info;
 
 BULK INSERT bronze.crm_cust_info
@@ -53,3 +56,4 @@ WITH (
     FIELDTERMINATOR = ',',
     TABLOCK
 );
+END
