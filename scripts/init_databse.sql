@@ -30,7 +30,14 @@ GO
 
 USE DataWarehouse;
 GO
--- Create Schemas
+
+-- Create schema if it doesn't exist
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'bronze')
+BEGIN
+	EXEC('CREATE SCHEMA bronze')
+END
+GO
+
 CREATE SCHEMA bronze;
 GO
 
