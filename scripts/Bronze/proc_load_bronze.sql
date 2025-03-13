@@ -5,6 +5,10 @@ BEGIN
 	PRINT '================================================';
 	
 	
+	PRINT '------------------------------------------------';
+	PRINT 'Loading CRM Tables';
+	PRINT '------------------------------------------------';
+
 	TRUNCATE TABLE bronze.crm_cust_info;
 
 	BULK INSERT bronze.crm_cust_info
@@ -33,6 +37,10 @@ BEGIN
 		FIELDTERMINATOR = ',',
 		TABLOCK
 	);
+
+	PRINT '------------------------------------------------';
+	PRINT 'Loading ERP Tables';
+	PRINT '------------------------------------------------';
 
 	TRUNCATE TABLE bronze.erp_loc_a101;
 	BULK INSERT bronze.erp_loc_a101
