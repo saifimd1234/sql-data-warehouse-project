@@ -1,6 +1,10 @@
 CREATE OR ALTER PROCEDURE bronze.load_bronze AS
 BEGIN
-
+	PRINT '================================================';
+	PRINT 'Loading Bronze Layer';
+	PRINT '================================================';
+	
+	
 	TRUNCATE TABLE bronze.crm_cust_info;
 
 	BULK INSERT bronze.crm_cust_info
