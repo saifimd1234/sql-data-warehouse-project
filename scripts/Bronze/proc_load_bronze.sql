@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE bronze.load_layer AS
+CREATE OR ALTER PROCEDURE bronze.load_bronze AS
 BEGIN
 
 TRUNCATE TABLE bronze.crm_cust_info;
