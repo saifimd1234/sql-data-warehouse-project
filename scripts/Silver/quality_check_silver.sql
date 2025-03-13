@@ -38,3 +38,14 @@ AND cst_id IN (
     GROUP BY cst_id 
     HAVING COUNT(*) > 1
 );
+
+-- Check for unwanted spaces.
+-- Expectation: No Results
+SELECT cst_firstname
+FROM bronze.crm_cust_info
+WHERE cst_firstname != TRIM(cst_firstname);
+
+SELECT cst_lastname
+FROM bronze.crm_cust_info
+WHERE cst_lastname != TRIM(cst_lastname);
+
