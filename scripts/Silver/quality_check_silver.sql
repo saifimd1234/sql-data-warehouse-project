@@ -224,3 +224,11 @@ WHERE
 -- Since, date column is INT datatype so we can check for negative values as well and the length should be 8 and not NULL.
 
 -- We can also check for the boundary values, that is the date should not be less than the start of sales and should not be greater than the specified date by the experts. (or for example te current date).
+
+-- Order date must always be earlier than the ship date or due date.
+-- Check for Invalid Date orders.
+SELECT
+*
+FROM bronze.crm_sales_details
+WHERE sls_order_dt > sls_ship_dt
+OR sls_order_dt > sls_due_dt;

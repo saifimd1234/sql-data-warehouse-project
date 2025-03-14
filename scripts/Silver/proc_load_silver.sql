@@ -59,3 +59,16 @@ SELECT
     CAST (prd_start_dt AS DATE) AS prd_start_dt,
     CAST(LEAD(prd_start_dt) OVER(PARTITION BY prd_key ORDER BY prd_start_dt) - 1 AS DATE) AS prd_end_dt
 FROM bronze.crm_prd_info;
+
+
+SELECT
+    [sls_ord_num],
+    [sls_prd_key],
+    [sls_cust_id],
+    [sls_order_dt],
+    [sls_ship_dt],
+    [sls_due_dt],
+    [sls_sales],
+    [sls_quantity],
+    [sls_price]
+FROM [DataWarehouse].[bronze].[crm_sales_details]
