@@ -432,3 +432,8 @@ FROM bronze.erp_px_cat_g1v2;
 
 -- Everything is good for all the three above, there are no issues.
 -- Since, everything is good we can simply go and insert the data.
+
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_px_cat_g1v2)
+-- Re-run the above queries by replacing bronze with silver.
+-- =============================================================
