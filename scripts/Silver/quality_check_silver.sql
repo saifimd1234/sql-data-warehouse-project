@@ -273,3 +273,79 @@ WHERE sls_sales != sls_quantity * sls_price;
 -- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_sales_details)
 -- Re-run the above queries by replacing bronze with silver.
 -- =============================================================
+
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_cust_az12)
+-- Re-run the above queries by replacing bronze with silver.
+-- =============================================================
+
+-- View the bronze.erp_cust_az12 table.
+SELECT * FROM bronze.erp_cust_az12;
+
+-- The ERP (cid column) dataset table can be connected with the CRM dataset table with cst_key.
+-- View both the tables that you want to connect.
+SELECT * FROM bronze.erp_cust_az12;
+SELECT * FROM silver.crm_cust_info;
+
+-- The bronze.erp_cust_az12 has column cid, it does not have all rows NAS.. some are without them.
+SELECT
+    cid,
+    bdate,
+    gen
+FROM bronze.erp_cust_az12
+WHERE cid NOT LIKE '%AWS00011000%';
+
+SELECT * FROM silver.crm_cust_info;
+
+-- We are doing the CASE WHEN transformation because not all rows contain the NAS.. some are without them so they will remain as it is. (ELSE block)
+SELECT
+    cid,
+    CASE
+        WHEN cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid))
+        ELSE cid
+    END cid,
+    bdate,
+    gen
+FROM bronze.erp_cust_az12;
+
+-- Checks for any unmatching cid in cst_key, after the transformation.
+SELECT
+    cid,
+    CASE
+        WHEN cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid))
+        ELSE cid
+    END cid,
+    bdate,
+    gen
+FROM bronze.erp_cust_az12
+WHERE CASE
+        WHEN cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid))
+        ELSE cid
+    END NOT IN (
+        SELECT cst_key
+        FROM silver.crm_cust_info
+    );
+
+-- Identify Out-of-Range Dates
+SELECT
+    DISTINCT bdate
+FROM bronze.erp_cust_az12
+WHERE bdate < '1900-01-01' -- check for very old customers
+OR bdate > '2021-12-31';   -- check for birthdays in future
+
+-- Data Standardization & Consistency
+-- Expectations: Low cardinality
+SELECT DISTINCT gen
+FROM bronze.erp_cust_az12;
+
+-- Data Transformation
+SELECT 
+    DISTINCT gen,
+    CASE
+        WHEN UPPER(TRIM(gen)) IN ('F', 'FEMALE') THEN 'Female'
+        WHEN UPPER(TRIM(gen)) IN ('M', 'MALE') THEN 'Male'
+        ELSE 'n/a'
+    END AS standardized_gen
+FROM bronze.erp_cust_az12;
+
+-- =============================================================
