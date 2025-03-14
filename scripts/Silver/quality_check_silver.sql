@@ -1,3 +1,5 @@
+-- =============================================================
+-- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.crm_cust_info)
 -- Check for NULLs or Duplicates in Primary Key
 -- Expectation: No Results
 
@@ -79,7 +81,7 @@ FROM (
 
 
 -- =============================================================
--- QUALITY CHECK FOR SILVER LAYER.
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_cust_info)
 -- Check for NULLs or Duplicates in Primary Key
 -- Expectation: No Results
 SELECT
