@@ -103,6 +103,7 @@ FROM silver.crm_cust_info
 WHERE cst_lastname != TRIM(cst_lastname);
 
 -- Data Standardization & Consistency
+-- Expectation: only 3 types of values (n/a, Male, Female)
 SELECT DISTINCT cst_gndr
 FROM silver.crm_cust_info;
 
