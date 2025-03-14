@@ -202,3 +202,21 @@ WHERE sls_cust_id NOT IN (
     SELECT cst_id
     FROM [DataWarehouse].[silver].[crm_cust_info]
 );
+
+-- Check for Invalid Dates
+SELECT
+    sls_order_dt
+FROM bronze.crm_sales_details
+WHERE ISDATE(sls_order_dt) = 0;
+-- ISDATE() function returns 0 if the input is not a valid date. So, if we get any output then we can say that the date is invalid.
+
+-- Alternatively.
+SELECT
+    sls_order_dt
+FROM 
+    bronze.crm_sales_details
+WHERE 
+    sls_order_dt <= 0 
+    OR LEN(CONVERT(VARCHAR(8), sls_order_dt)) != 8 
+    OR sls_order_dt IS NULL;
+-- Since, date column is INT datatype so we can check for negative values as well and the length should be 8 and not NULL.
