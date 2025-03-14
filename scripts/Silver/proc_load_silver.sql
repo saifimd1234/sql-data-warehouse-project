@@ -30,11 +30,21 @@ FROM (
         ROW_NUMBER() OVER(PARTITION BY cst_id ORDER BY cst_create_date DESC) AS flag_last
     FROM bronze.crm_cust_info
 	WHERE cst_id IS NOT NULL
-)t WHERE flag_last = 1
+)t WHERE flag_last = 1;
 
+
+INSERT INTO silver.crm_prd_info (
+		prd_id,
+		cat_id,
+		prd_key,
+		prd_nm,
+		prd_cost,
+		prd_line,
+		prd_start_dt,
+		prd_end_dt
+	)
 SELECT
     prd_id,
-    prd_key,
     REPLACE(SUBSTRING(prd_key, 1, 5), '-', '_') AS cat_id,
     SUBSTRING(prd_key, 7, LEN(prd_key)) AS prd_key,
     prd_nm,
