@@ -138,3 +138,9 @@ WHERE prd_cost < 0 OR prd_cost IS NULL;
 -- Expectation: No Results
 SELECT DISTINCT prd_line
 FROM bronze.crm_prd_info;
+
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_prd_info)
+-- Re-run the above queires by replacing bronze with silver.
+-- =============================================================
+
