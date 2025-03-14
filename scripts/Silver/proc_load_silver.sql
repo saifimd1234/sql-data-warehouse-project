@@ -39,11 +39,11 @@ SELECT
     SUBSTRING(prd_key, 7, LEN(prd_key)) AS prd_key,
     prd_nm,
     ISNULL(prd_cost, 0) AS prd_cost,
-    CASE
-        WHEN UPPER(TRIM(prd_line)) = 'M' THEN 'Mountain'
-        WHEN UPPER(TRIM(prd_line)) = 'R' THEN 'Road'
-        WHEN UPPER(TRIM(prd_line)) = 'T' THEN 'Touring'
-        WHEN UPPER(TRIM(prd_line)) = 'S' THEN 'Other Sales'
+    CASE UPPER(TRIM(prd_line))
+        WHEN 'M' THEN 'Mountain'
+        WHEN 'R' THEN 'Road'
+        WHEN 'T' THEN 'Touring'
+        WHEN 'S' THEN 'Other Sales'
         ELSE 'n/a'
     END AS prd_line,
     prd_start_dt,
