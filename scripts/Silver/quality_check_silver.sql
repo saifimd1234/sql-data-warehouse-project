@@ -218,5 +218,9 @@ FROM
 WHERE 
     sls_order_dt <= 0 
     OR LEN(CONVERT(VARCHAR(8), sls_order_dt)) != 8 
-    OR sls_order_dt IS NULL;
+    OR sls_order_dt IS NULL
+    OR sls_order_dt < 19000101
+    OR sls_order_dt > 20501231;
 -- Since, date column is INT datatype so we can check for negative values as well and the length should be 8 and not NULL.
+
+-- We can also check for the boundary values, that is the date should not be less than the start of sales and should not be greater than the specified date by the experts. (or for example te current date).
