@@ -398,3 +398,8 @@ FROM bronze.erp_loc_a101
 ORDER BY cntry;
 
 -- Next, we will insert these values in the silver layer tables. The DDL statement is not changed as number of columns is same and datatype is also same.
+
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_loc_a101)
+-- Re-run the above queries by replacing bronze with silver.
+-- =============================================================
