@@ -351,3 +351,50 @@ FROM bronze.erp_cust_az12;
 -- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_cust_az12)
 -- Re-run the above queries by replacing bronze with silver.
 -- =============================================================
+
+-- =============================================================
+-- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.erp_loc_a101)
+-- =============================================================
+
+-- View the table.
+SELECT
+    cid,
+    cntry
+FROM bronze.erp_loc_a101;
+
+-- The cid of ERP table can be used to connect with CRM customer table using cst_key.
+-- View both the tables that you want to connect.
+SELECT * FROM bronze.erp_loc_a101;
+SELECT * FROM silver.crm_cust_info;
+
+-- Use REPLACE command to remove the hyphen (-).
+SELECT
+REPLACE(cid, '-', '') AS cid,
+cntry
+FROM bronze.erp_loc_a101;
+
+SELECT cst_key FROM silver.crm_cust_info;
+
+-- Check for any non-matching cid in cst_key.
+SELECT
+    REPLACE(cid, '-', '') AS cid,
+    cntry
+FROM bronze.erp_loc_a101
+WHERE REPLACE(cid, '-', '') NOT IN (
+    SELECT cst_key
+    FROM silver.crm_cust_info
+);
+
+-- Data Standardization & Consistency
+SELECT
+DISTINCT cntry AS old_cntry,
+CASE
+    WHEN TRIM(cntry) = 'DE' THEN 'Germany'
+    WHEN TRIM(cntry) IN ('US', 'USA') THEN 'United States'
+    WHEN TRIM(cntry) = '' OR cntry IS NULL THEN 'n/a'
+    ELSE cntry
+END AS standardized_cntry
+FROM bronze.erp_loc_a101
+ORDER BY cntry;
+
+-- Next, we will insert these values in the silver layer tables. The DDL statement is not changed as number of columns is same and datatype is also same.
