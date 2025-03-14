@@ -1,5 +1,6 @@
 -- =============================================================
 -- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.crm_cust_info)
+-- =============================================================
 -- Check for NULLs or Duplicates in Primary Key
 -- Expectation: No Results
 
@@ -82,6 +83,7 @@ FROM (
 
 -- =============================================================
 -- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_cust_info)
+-- =============================================================
 -- Check for NULLs or Duplicates in Primary Key
 -- Expectation: No Results
 SELECT
@@ -110,8 +112,8 @@ SELECT DISTINCT cst_gndr
 FROM silver.crm_cust_info;
 
 -- =============================================================
-
 -- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.crm_prd_info)
+-- =============================================================
 
 -- Check for NULLs or Duplicates in Primary Key.
 -- Expectation: No Results
@@ -144,7 +146,9 @@ FROM bronze.crm_prd_info;
 -- Re-run the above queires by replacing bronze with silver.
 -- =============================================================
 
--- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_sales_details)
+-- =============================================================
+-- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.crm_sales_details)
+-- =============================================================
 -- For string columns check for unwanted spaces.
 -- Expectation: No Results
 
@@ -264,3 +268,8 @@ SELECT
     END AS derived_price
 FROM bronze.crm_sales_details
 WHERE sls_sales != sls_quantity * sls_price;
+
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_sales_details)
+-- Re-run the above queries by replacing bronze with silver.
+-- =============================================================
