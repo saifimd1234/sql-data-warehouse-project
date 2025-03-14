@@ -162,3 +162,23 @@ SELECT
     [sls_price]
 FROM [DataWarehouse].[bronze].[crm_sales_details]
 WHERE sls_ord_num != TRIM(sls_ord_num);
+
+-- Similarly, we can check the integrity of the columns in the silver layer.
+-- Using NOT IN we can check the sls_prd_key that are not present in prd_key in other table.
+-- Since, we are not getting any output that means everything is good and we can go and connect them without any issues.
+
+SELECT
+    [sls_ord_num],
+    [sls_prd_key],
+    [sls_cust_id],
+    [sls_order_dt],
+    [sls_ship_dt],
+    [sls_due_dt],
+    [sls_sales],
+    [sls_quantity],
+    [sls_price]
+FROM [DataWarehouse].[bronze].[crm_sales_details]
+WHERE sls_prd_key NOT IN (
+    SELECT prd_key
+    FROM [DataWarehouse].[bronze].[crm_prd_info]
+);
