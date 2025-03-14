@@ -403,3 +403,32 @@ ORDER BY cntry;
 -- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_loc_a101)
 -- Re-run the above queries by replacing bronze with silver.
 -- =============================================================
+
+-- =============================================================
+-- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.erp_px_cat_g1v2)
+-- =============================================================
+
+-- View the table.
+SELECT * FROM bronze.erp_px_cat_g1v2;
+
+-- This table can be connected with CRM using prd_key.
+-- In the CRM table we have already done the transformation.
+-- Check for unwanted spaces.
+SELECT * FROM bronze.erp_px_cat_g1v2
+WHERE id != TRIM(id) 
+    OR cat != TRIM(cat) 
+    OR subcat != TRIM(subcat) 
+    OR maintenance != TRIM(maintenance);
+
+-- Data Standardization & Consistency
+SELECT DISTINCT cat
+FROM bronze.erp_px_cat_g1v2;
+
+SELECT DISTINCT subcat
+FROM bronze.erp_px_cat_g1v2;
+
+SELECT DISTINCT maintenance
+FROM bronze.erp_px_cat_g1v2;
+
+-- Everything is good for all the three above, there are no issues.
+-- Since, everything is good we can simply go and insert the data.
