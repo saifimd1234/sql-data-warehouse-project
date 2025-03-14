@@ -77,6 +77,7 @@ FROM (
 	WHERE cst_id IS NOT NULL
 )t WHERE flag_last = 1
 
+
 -- =============================================================
 -- QUALITY CHECK FOR SILVER LAYER.
 -- Check for NULLs or Duplicates in Primary Key
@@ -104,3 +105,5 @@ WHERE cst_lastname != TRIM(cst_lastname);
 -- Data Standardization & Consistency
 SELECT DISTINCT cst_gndr
 FROM silver.crm_cust_info;
+
+-- =============================================================
