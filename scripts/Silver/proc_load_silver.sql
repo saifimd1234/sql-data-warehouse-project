@@ -31,3 +31,14 @@ FROM (
     FROM bronze.crm_cust_info
 	WHERE cst_id IS NOT NULL
 )t WHERE flag_last = 1
+
+SELECT
+    prd_id,
+    prd_key,
+    SUBSTRING(prd_key, 1, 5) AS cat_id,
+    prd_nm,
+    prd_cost,
+    prd_line,
+    prd_start_dt,
+    prd_end_dt
+FROM bronze.crm_prd_info;
