@@ -275,8 +275,7 @@ WHERE sls_sales != sls_quantity * sls_price;
 -- =============================================================
 
 -- =============================================================
--- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_cust_az12)
--- Re-run the above queries by replacing bronze with silver.
+-- QUALITY CHECK FOR BRONZE LAYER. (Table: bronze.erp_cust_az12)
 -- =============================================================
 
 -- View the bronze.erp_cust_az12 table.
@@ -348,4 +347,7 @@ SELECT
     END AS standardized_gen
 FROM bronze.erp_cust_az12;
 
+-- =============================================================
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.erp_cust_az12)
+-- Re-run the above queries by replacing bronze with silver.
 -- =============================================================
