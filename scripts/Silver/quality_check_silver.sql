@@ -144,3 +144,21 @@ FROM bronze.crm_prd_info;
 -- Re-run the above queires by replacing bronze with silver.
 -- =============================================================
 
+-- QUALITY CHECK FOR SILVER LAYER. (Table: silver.crm_sales_details)
+-- For string columns check for unwanted spaces.
+-- Expectation: No Results
+
+-- As we are using prd_key (sls_prd_key) and cst_id (sls_cust_id) to connect the two tables so here we can check the integrity of these columns.
+
+SELECT
+    [sls_ord_num],
+    [sls_prd_key],
+    [sls_cust_id],
+    [sls_order_dt],
+    [sls_ship_dt],
+    [sls_due_dt],
+    [sls_sales],
+    [sls_quantity],
+    [sls_price]
+FROM [DataWarehouse].[bronze].[crm_sales_details]
+WHERE sls_ord_num != TRIM(sls_ord_num);
