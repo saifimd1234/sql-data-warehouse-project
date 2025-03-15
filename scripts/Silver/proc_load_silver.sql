@@ -1,3 +1,5 @@
+CREATE OR ALTER PROCEDURE silver.load_silver AS
+BEGIN	
 	PRINT '------------------------------------------------';
 	PRINT 'Loading CRM Tables';
 	PRINT '------------------------------------------------';
@@ -176,3 +178,4 @@
 		subcat,
 		maintenance
 	FROM bronze.erp_px_cat_g1v2;
+END
