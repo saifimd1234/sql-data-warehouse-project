@@ -56,3 +56,19 @@ LEFT JOIN gold.dim_products AS pr
     ON sd.sls_prd_key = pr.product_number
 LEFT JOIN gold.dim_customers AS cu
     ON sd.sls_cust_id = cu.customer_id;
+
+-- Foreign Key Integrity Check (Dimensions)
+SELECT *
+FROM gold.fact_sales AS f
+LEFT JOIN gold.dim_customers c
+    ON f.customer_key = c.customer_id
+WHERE c.customer_id IS NULL;
+
+-- Foreign Key Integrity Check (Dimensions)
+SELECT *
+FROM gold.fact_sales AS f
+LEFT JOIN gold.dim_customers c
+    ON f.customer_key = c.customer_id
+LEFT JOIN gold.dim_products p
+    ON f.product_key = p.product_key
+WHERE p.product_key IS NULL;
