@@ -1,3 +1,10 @@
+-- =============================================================================
+-- Create Dimension: gold.dim_customers
+-- =============================================================================
+IF OBJECT_ID('gold.dim_customers', 'V') IS NOT NULL
+    DROP VIEW gold.dim_customers;
+GO
+
 SELECT 
     ROW_NUMBER() OVER(ORDER BY cst_id) AS customer_key, -- Surrogate key
 	ci.cst_id                          AS customer_id,
@@ -20,3 +27,4 @@ LEFT JOIN silver.erp_cust_az12 AS ca
     ON ci.cst_id = ca.cid
 LEFT JOIN silver.erp_loc_a101 AS la 
     ON ca.cid = la.cid;
+GO
