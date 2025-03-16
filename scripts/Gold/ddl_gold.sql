@@ -1,13 +1,16 @@
 SELECT 
-    ci.cst_id,
+    ROW_NUMBER() OVER(ORDER BY cst_id) AS customer_key, -- Surrogate key
+	ci.cst_id,
     ci.cst_key,
     ci.cst_firstname,
     ci.cst_lastname,
     ci.cst_marital_status,
     ci.cst_create_date,
-    ci.cst_gndr,
+    CASE
+		WHEN ci.cst_gndr != 'n/a' THEN ci.cst_gndr   -- CRM is the primary source for gender
+		ELSE COALESCE(ca.gen, 'n/a')   -- Fallback to ERP data
+	END gender,
     ca.bdate,
-    ca.gen,
     la.cntry
 FROM 
     silver.crm_cust_info AS ci
